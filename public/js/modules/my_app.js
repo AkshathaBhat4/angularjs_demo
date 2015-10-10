@@ -30,3 +30,19 @@ app.controller('ChildController', function($scope) {
     $scope.person.greeted = true;
   }
 });
+app.controller('ParseController', function($scope, $parse) {
+  $scope.$watch('expr', function(newVal, oldVal, scope) {
+    if (newVal !== oldVal) {
+      var parseFun = $parse(newVal);
+      $scope.parsedValue = parseFun(scope);
+    }
+  });
+});
+app.controller('InterpolateController', function($scope, $interpolate) {
+  $scope.$watch('emailBody', function(body) {
+    if (body) {
+      var template = $interpolate(body);
+      $scope.previewText = template({to: $scope.to});
+    }
+  });
+});
